@@ -28,7 +28,7 @@
                     <a href="#" class="nav-link">Homepage</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="#" class="nav-link">About Me</a>
+                    <a href="#" class="nav-link">About Us</a>
                 </li>
                 <li class="navbar-item">
                     <a href="#" class="nav-link">Contact</a>
