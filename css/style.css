@@ -96,3 +96,11 @@ img.avatar {
 	background-color: transparent;
 	border-color: tomato;
 }
+.table {
+    border-radius: 5px;
+    width: 1300px;
+    margin: 0px auto;
+}
+.dropdown-menu form {
+	padding:10px;
+}
