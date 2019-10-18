@@ -1,5 +1,4 @@
 /*CSS file*/
-
 body{
 	background-image: url('../imgs/backgnd.jpg');
 	background-repeat: no-repeat;
@@ -98,9 +97,29 @@ img.avatar {
 }
 .table {
     border-radius: 5px;
-    width: 1300px;
-    margin: 0px auto;
+    width: 70%;
+	margin: 0px auto;
+	margin-left: 350px;
 }
-.dropdown-menu form {
-	padding:10px;
+.dropdown-menu {
+	padding: 10px;
+	background-color: rgba(0,0,0,0.8);
+}
+
+.form-horizontal .donotchange {
+		color: white;
+		margin-left: 50px;
+		margin-top: 70px;
+}
+
+.btn.btn-default {
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	margin-left: 20px;
+	background-color: rgba(219, 206, 17, 0.863);
+	color: black;
+}
+.btn.btn-submit {
+	margin-left: 40px;
+	background-color: rgba(219, 206, 17, 0.863);
+	color: black;
 }

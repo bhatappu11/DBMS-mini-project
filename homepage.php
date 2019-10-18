@@ -28,29 +28,26 @@
                     <a href="#" class="nav-link">Homepage</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="#" class="nav-link">About Us</a>
+                    <a href="aboutUs.php" class="nav-link">About Us</a>
                 </li>
                 <li class="navbar-item">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="contact.php" class="nav-link">Contact</a>
                 </li>
                 <li>
                     <form action="index.php" method="post">
                         <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
                     </form>
                 </li>
-                <!--<li class="navbar-item">
-                    <a href="index.php" class="logout_button">Logout</a>
-                </li> -->
-            </ul>
         </div>
 	</nav>
     
     <div>
 		<h3> <br><br> </h3>
     </div>
-    
+   
     <div class="header">
         <center><h3>Welcome, <?php echo $_SESSION['username']; ?></h3></center>
+        <center><h3>ID: <?php echo '1' ?></h3></center>
     </div>
 
     <div class="container" style="margin-top:100px">
@@ -112,6 +109,8 @@
             </div>
         </div>
     </div>
+
+    
 
 </body>
 </html>

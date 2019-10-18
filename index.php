@@ -24,10 +24,10 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="navbar-item">
-                        <a href="#" class="nav-link">About Me</a>
+                        <a href="aboutUs.php" class="nav-link">About Us</a>
                     </li>
                     <li class="navbar-item">
-                        <a href="#" class="nav-link">Contact</a>
+                        <a href="contact.php" class="nav-link">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -54,10 +54,10 @@
 			{
 				@$username=$_POST['username'];
 				@$password=$_POST['password'];
+				
 				$query = "select * from builder where Builder_name='$username' and password='$password' ";
 				//echo $query;
 				$query_run = mysqli_query($con,$query);
-				//echo mysql_num_rows($query_run);
 				if($query_run)
 				{
 					if(mysqli_num_rows($query_run)>0)
@@ -74,17 +74,16 @@
 						echo '<script type="text/javascript">alert("No such User exists. Invalid Credentials")</script>';
 					}
 				}
+				
 				else
 				{
 					echo '<script type="text/javascript">alert("Database Error")</script>';
 				}
+				
 			}
 			else
 			{
 			}
-
-			//link the hompage correctly in all pages
-
 		?>
 	</div>
 </body>
