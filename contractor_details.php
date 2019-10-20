@@ -27,9 +27,7 @@
                 <li class="navbar-item">
                     <a href="homepage.php" class="nav-link">Homepage</a>
                 </li>
-                <li class="navbar-item">
-                    <a href="aboutUs.php" class="nav-link">About Us</a>
-                </li>
+                
                 <li class="navbar-item">
                     <a href="contact.php" class="nav-link">Contact</a>
                 </li>
