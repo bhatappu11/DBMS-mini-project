@@ -47,7 +47,14 @@
    
     <div class="header">
         <center><h3>Welcome, <?php echo $_SESSION['username']; ?></h3></center>
-        <center><h3>ID: <?php echo '1' ?></h3></center>
+        <center><h3>ID: <?php 
+        $uname = $_SESSION['username'];
+        $query = "select Builder_id from builder where Builder_name='$uname'";
+        $query_run=mysqli_query($con,$query);
+        $ans = mysqli_fetch_assoc($query_run);
+        $id = $ans['Builder_id'];
+        echo $id;
+        ?></h3></center>
     </div>
 
     <div class="container" style="margin-top:100px">
