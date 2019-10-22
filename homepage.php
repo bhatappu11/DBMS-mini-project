@@ -74,7 +74,7 @@
                 <p class="card-text">Here's a detailed list of all your projects.</p>
             </div>
             <div class="card-body">
-            <a href="#" class="btn btn-primary">View All</a>
+            <a href="projects.php" class="btn btn-primary">View All</a>
             </div>
         </div>
     </div>
