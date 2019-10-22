@@ -27,9 +27,7 @@
                 <li class="navbar-item">
                     <a href="homepage.php" class="nav-link">Homepage</a>
                 </li>
-                <li class="navbar-item">
-                    <a href="aboutUs.php" class="nav-link">About Us</a>
-                </li>
+                
                 <li class="navbar-item">
                     <a href="contact.php" class="nav-link">Contact</a>
                 </li>
@@ -45,43 +43,71 @@
     <div>
 		<h3> <br><br> </h3>
     </div>
-    <div class="form-inline">
-        <div class="form-group">
-            <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Contractors <span class="caret"></span> </button>
-            <ul class="dropdown-menu" aria-labelledby="strikes">
-                <li style="width: 280px;">
-                <form class="form-horizontal" style="display:block;">
-                    <div class="form-group donotchange">
-                    <label for="strike-from" class="col-sm-2 control-label">Contractor Name</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" id="Cont_name" value="">
-                    </div>
-                    </div>
-                    <div class="form-group donotchange">
-                    <label for="strike-to" class="col-sm-2 control-label">Phone Number</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" id="Phn" value="">
-                    </div>
-                    </div>
-                    <div class="form-group donotchange">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-submit">Add</button>
-                    </div>
-                    </div>
-                </form>
-                </li>
-            </ul>
-            </div>
-        </div></div>          
-        <div id="push"></div>
+    <div>
+	<center><h2>Add contractors</h2></center>
+		<form action="contractor_details.php" method="post">
+			<div>
+				<label><b>Contractor Name</b></label>
+				<input type="text" placeholder="Enter name" name="cont_name" required>
+				<label><b>Phone Number</b></label>
+				<input type="number" placeholder="Enter Phone number" name="phone" required>
+				<button name="add_contractor" class="sign_up_btn" type="submit">Add</button>
+				
+			</div>
+		</form>
+		
+		<?php
+			if(isset($_POST['add_contractor']))
+			{
+                $username=$_SESSION['username'];
+                $query = "select Builder_id from builder where Builder_name='$username'";
+                $query_run=mysqli_query($con,$query);
+                $ans = mysqli_fetch_assoc($query_run);
+                $id = $ans['Builder_id'];
+
+				//$query = "select * from contractor where Builder_id='$id' and Contractor_name='$contractor_name'";
+				//echo $query;
+				//$query_run = mysqli_query($con,$query);
+				//echo mysql_num_rows($query_run);
+				//if($query_run)
+					// {
+					// 	if(mysqli_num_rows($query_run)>0)
+					// 	{
+					// 		echo '<script type="text/javascript">alert("This Username Already exists.. Please try another username!")</script>';
+					// 	}
+					// 	else
+					// 	{
+							$query = "insert into contractor (Contractor_id,Contractor_name,Builder_id,PhoneNum) values('','". $_POST["cont_name"] . "','$id','" . $_POST["phone"] . "')";
+							$query_run = mysqli_query($con,$query);
+							if($query_run)
+							{
+								echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
+								header( "Location: contractor_details.php");
+							}
+							else
+							{
+								echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+							}
+						}
+			// 		}
+			// 		else
+			// 		{
+			// 			echo '<script type="text/javascript">alert("DB error")</script>';
+			// 		}
+				
+			// }
+			else
+			{
+			}
+		?>
+	</div>
     <div class="container" style="margin-top:30px">
         <table class="table table-striped table-dark table-bordered text-center">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Password</th>
+                <th>Contratcor ID</th>
+                <th>Contractor Name</th>
+                <th>Phone Number</th>
             </tr>
         </thead>
         <tbody>
@@ -89,16 +115,24 @@
                 
                 $sql = "SELECT * FROM builder";
                 $query_run = mysqli_query($con,$sql);
-        
+
+                $uname = $_SESSION['username'];
+                $query = "select Builder_id from builder where Builder_name='$uname'";
+                $query_run=mysqli_query($con,$query);
+                $ans = mysqli_fetch_assoc($query_run);
+                $id = $ans['Builder_id'];
+
+                $query = "select * from contractor where Builder_id='$id'";
+                $query_run = mysqli_query($con,$query);
             
                 if(mysqli_num_rows($query_run)>0) {
-                    // output data of each row
+                    // output data of each rows
                     while($row = $query_run->fetch_assoc()) {
-                        echo "<tr><td>" . $row["Builder_id"]. "</td><td>" . $row["Builder_name"] . "</td><td>"
-                        . $row["password"]. "</td></tr>";
+                        echo "<tr><td>" . $row["Contractor_id"]. "</td><td>" . $row["Contractor_name"] . "</td><td>"
+                        . $row["PhoneNum"]. "</td></tr>";
                     }
                     echo "</table>";
-                } else { echo "0 results"; } 
+                } else { echo "0 results"; }
             ?>
         </tbody>
         </table>
