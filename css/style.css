@@ -106,10 +106,10 @@ img.avatar {
 	background-color: rgba(0,0,0,0.8);
 }
 
-.form-horizontal .donotchange {
-		color: white;
-		margin-left: 30px;
-		margin-top: 70px;
+.class-for-form {
+	color: white;
+	margin-left: 30px;
+	margin-top: 70px;
 }
 
 .btn.btn-default {
@@ -118,8 +118,13 @@ img.avatar {
 	background-color: rgba(219, 206, 17, 0.863);
 	color: black;
 }
+
 .btn-submit {
-	margin-left: 60px;
+	margin-left: 80px;
 	background-color: rgba(219, 206, 17, 0.863);
 	color: black;
+}
+.input-class {
+	width: 230px;
+	margin-bottom: 100px;
 }

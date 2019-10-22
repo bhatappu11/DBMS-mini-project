@@ -43,18 +43,26 @@
     <div>
 		<h3> <br><br> </h3>
     </div>
-    <div>
-	<center><h2>Add contractors</h2></center>
-		<form action="contractor_details.php" method="post">
-			<div>
-				<label><b>Contractor Name</b></label>
-				<input type="text" placeholder="Enter name" name="cont_name" required>
-				<label><b>Phone Number</b></label>
-				<input type="number" placeholder="Enter Phone number" name="phone" required>
-				<button name="add_contractor" class="sign_up_btn" type="submit">Add</button>
-				
-			</div>
-		</form>
+
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Contractors <span class="caret"></span> </button>
+                <ul class="dropdown-menu" aria-labelledby="strikes">
+                    <li style="width: 280px;">
+            		    <form action="contractor_details.php" method="post">
+			                <div class="class-for-form">
+				                <label><b>Contractor Name</b></label>
+                                <input type="text" class="input-class" placeholder="Enter contractor name" name="cont_name" required>
+                                <label><b>Phone Number</b></label>
+                                <input type="number" class="input-class" placeholder="Enter contractor Phone number" name="phone" required>
+                                <button name="add_contractor" class="btn-submit" type="submit">Add</button>
+				            </div>
+		                </form>
+                    </li>
+                </ul>
+            </div>
+        </div>                  
 		
 		<?php
 			if(isset($_POST['add_contractor']))
@@ -64,43 +72,46 @@
                 $query_run=mysqli_query($con,$query);
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
-
-				//$query = "select * from contractor where Builder_id='$id' and Contractor_name='$contractor_name'";
+                
+                $cont_name = $_POST['cont_name'];
+				$query = "select * from contractor where Builder_id='$id' and Contractor_name='$cont_name'";
 				//echo $query;
-				//$query_run = mysqli_query($con,$query);
+				$query_run = mysqli_query($con,$query);
 				//echo mysql_num_rows($query_run);
-				//if($query_run)
-					// {
-					// 	if(mysqli_num_rows($query_run)>0)
-					// 	{
-					// 		echo '<script type="text/javascript">alert("This Username Already exists.. Please try another username!")</script>';
-					// 	}
-					// 	else
-					// 	{
-							$query = "insert into contractor (Contractor_id,Contractor_name,Builder_id,PhoneNum) values('','". $_POST["cont_name"] . "','$id','" . $_POST["phone"] . "')";
-							$query_run = mysqli_query($con,$query);
-							if($query_run)
-							{
-								echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
-								header( "Location: contractor_details.php");
-							}
-							else
-							{
-								echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
-							}
-						}
-			// 		}
-			// 		else
-			// 		{
-			// 			echo '<script type="text/javascript">alert("DB error")</script>';
-			// 		}
+				if($query_run)
+                {
+                    if(mysqli_num_rows($query_run)>0)
+                    {
+                        echo '<script type="text/javascript">alert("This Username Already exists.. Please try another username!")</script>';
+                    }
+                    else
+                    {
+                        $query = "insert into contractor (Contractor_id,Contractor_name,Builder_id,PhoneNum) values('','". $_POST["cont_name"] . "','$id','" . $_POST["phone"] . "')";
+                        $query_run = mysqli_query($con,$query);
+                        if($query_run)
+                        {
+                            echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
+                            header( "Location: contractor_details.php");
+                        }
+                        else
+                        {
+                            echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                        }
+                    }
+                }
+                else
+                {
+                    echo '<script type="text/javascript">alert("DB error")</script>';
+                }
 				
-			// }
+			}
 			else
 			{
 			}
 		?>
 	</div>
+    <div id="push"></div>
+    
     <div class="container" style="margin-top:30px">
         <table class="table table-striped table-dark table-bordered text-center">
         <thead>
@@ -137,6 +148,9 @@
         </tbody>
         </table>
     </div>
+	
+
+
 
     <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
