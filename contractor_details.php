@@ -48,18 +48,18 @@
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Contractors <span class="caret"></span> </button>
                 <ul class="dropdown-menu" aria-labelledby="strikes">
-                    <li style="width: 280px;">
+                    <li style="width: 280px;">  
                         <form class="form-horizontal" action="contractor_details.php" style="display:block;">
                             <div class="form-group donotchange">
                                 <label for="strike-from" class="col-sm-2 control-label">Contractor Name</label>
                                 <div class="col-xs-8">
-                                    <input type="text" name="cont-name" placeholder="Enter contratcor name">
+                                    <input type="text" class="form-control" name="cont-name" placeholder="Enter contratcor name">
                                 </div>
                             </div>
                             <div class="form-group donotchange">
                                 <label for="strike-to" class="col-sm-2 control-label">Phone Number</label>
                                 <div class="col-xs-8">
-                                    <input type="text" name="Phn" placeholder="Enter contractor's phone number">
+                                    <input type="text" class="form-control" name="Phn" placeholder="Enter contractor's phone number">
                                 </div>
                             </div>
                             <div class="form-group donotchange">
@@ -110,7 +110,6 @@
                             }
                             else
                             {
-                                echo "Bye";
                             }
                         ?>
                     </li>
