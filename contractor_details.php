@@ -71,8 +71,8 @@
                         <?php
                             if(isset($_POST['add_contractor']))
                             {
-                                @$cont_name=$POST['cont-name'];
-                                @$phone=$_POST['Phn'];
+                                $cont_name=$POST['cont-name'];
+                                $phone=$_POST['Phn'];
                                 
                                 $username=$_SESSION['username'];
                                 $query = "select Builder_id from builder where Builder_name='$username'";
@@ -96,6 +96,7 @@
                                         $query_run2 = mysqli_query($con,$query2);
                                         if($query_run2)
                                         {
+                                            header( "Location: contractor_details.php");
                                         }
                                         else
                                         {
