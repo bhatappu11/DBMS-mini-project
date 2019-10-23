@@ -86,7 +86,7 @@
                 <p class="card-text">Here's today's schedule.</p>
             </div>
             <div class="card-body">
-            <a href="#" class="btn btn-primary">View All</a>
+            <a href="daily_schedule.php" class="btn btn-primary">View All</a>
             </div>
         </div>
     </div>
