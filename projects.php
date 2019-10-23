@@ -51,9 +51,7 @@
                     <li style="width: 280px;">
             		    <form action="projects.php" method="post">
 			                <div class="class-for-form">
-                                <label><b>Project ID</b></label>
-				                <input type="text" class="input-class" placeholder="Enter project id" name="project_id" required>
-				                <label><b>Project Name</b></label>
+                                <label><b>Project Name</b></label>
                                 <input type="text" class="input-class" placeholder="Enter project name" name="project_name" required>
                                 <label><b>Contractor ID</b></label>
                                 <input type="number" class="input-class" placeholder="Enter contractor ID" name="cont_id" required>
@@ -69,7 +67,6 @@
 			if(isset($_POST['add_project']))
 			{
                 $project_name=$_POST['project_name'];
-                $project_id=$_POST['project_id'];
                 $contractor_id=$_POST['cont_id'];
                 $username=$_SESSION['username'];
                 $query = "select Builder_id from builder where Builder_name='$username'";
@@ -77,20 +74,29 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                // $query2 = "select project_id from projects where Builder_id='$id'";
-                // $query_run2=mysqli_query($con,$query2);
-                // $ans2 = mysqli_fetch_assoc($query_run2);
-                // $id2 = $ans['project_id'];
-
-                $query = "insert into projects values('','". $_POST["project_name"] ."','$id','". $_POST["cont_id"] ."')";
-                $query_run = mysqli_query($con,$query);
-                if($query_run)
-                {
-                    echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
-                    header( "Location: projects.php");
+                $query = "select Builder_id from contractor where Contractor_id='$contractor_id'";
+                $query_run=mysqli_query($con,$query);
+                if($query_run) {
+                    while($row = mysqli_fetch_assoc($query_run)) {          
+                        $builder_id = $row['Builder_id'];
+                        if($builder_id == $id) {
+                            $query = "insert into projects values('','". $_POST["project_name"] ."','$id','". $_POST["cont_id"] ."')";
+                            $query_run = mysqli_query($con,$query);
+                            if($query_run) {
+                                echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
+                                header( "Location: projects.php");
+                            }
+                            else
+                            {
+                                echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                            }
+                        }
+                        else {
+                            echo "Contractor does not exit in your list.. add contractor and try again...";
+                        }
+                    }
                 }
-                else
-                {
+                else {
                     echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
                 }
             }
