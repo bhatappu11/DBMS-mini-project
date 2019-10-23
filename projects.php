@@ -72,44 +72,30 @@
                 $project_id=$_POST['project_id'];
                 $contractor_id=$_POST['cont_id'];
                 $username=$_SESSION['username'];
-                $query = "select project_id from builder where Builder_name='$username'";
+                $query = "select Builder_id from builder where Builder_name='$username'";
                 $query_run=mysqli_query($con,$query);
                 $ans = mysqli_fetch_assoc($query_run);
-                $id = $ans['project_id'];
-                
-				$query = "select * from projects where project_id='$id'";
-				//echo $query;
-				$query_run = mysqli_query($con,$query);
-				//echo mysql_num_rows($query_run);
-				if($query_run)
-				{
-					if(mysqli_num_rows($query_run)>0)
-					{
-						echo '<script type="text/javascript">alert("This Project ID Already exists.. Please try another!")</script>';
-					}
-					else
-					{
-						$query = "insert into projects values('". $_POST["project_id"] . "','". $_POST["project_name"] ."','$id','". $_POST["cont_id"] ."')";
-						$query_run = mysqli_query($con,$query);
-						if($query_run)
-						{
-							echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
-							header( "Location: projects.php");
-						}
-						else
-						{
-							echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
-						}
-					}
-				}
-				else
-				{
-					echo '<script type="text/javascript">alert("DB error")</script>';
-				}
-			}
-			else
-			{
-			}
+                $id = $ans['Builder_id'];
+
+                // $query2 = "select project_id from projects where Builder_id='$id'";
+                // $query_run2=mysqli_query($con,$query2);
+                // $ans2 = mysqli_fetch_assoc($query_run2);
+                // $id2 = $ans['project_id'];
+
+                $query = "insert into projects values('','". $_POST["project_name"] ."','$id','". $_POST["cont_id"] ."')";
+                $query_run = mysqli_query($con,$query);
+                if($query_run)
+                {
+                    echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
+                    header( "Location: projects.php");
+                }
+                else
+                {
+                    echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                }
+            }
+            else {
+            }
 		?>
 	</div>
     <div class="container" style="margin-top:30px">
