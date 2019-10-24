@@ -77,7 +77,6 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                // $cont_name = $_POST['cont_name'];
 				// $query = "select * from contractor where Builder_id='$id' and Contractor_name='$cont_name'";
 				// echo $query;
 				// $query_run = mysqli_query($con,$query);
@@ -90,7 +89,7 @@
                 //     }
                 //     else
                 //     {
-                        $query = "insert into personal_schedule values('$id',' " . $_POST['work_name'] . " ',' " . $_POST['date_due'] . " ')";//," . $_POST["time"] . "')";
+                        $query = "insert into personal_schedule values('$id','". $_POST['work_name'] ."','". $_POST['date_due'] ."')";//," . $_POST["time"] . "')";
                         $query_run = mysqli_query($con,$query);
                         if($query_run)
                         {
@@ -143,7 +142,7 @@
                     // output data of each rows
                     while($row = $query_run->fetch_assoc()) {
                         echo "<tr><td>" . $row["Builder_id"]. "</td><td>" . $row["Type_of_work"] . "</td><td>"
-                        . $row["Date"]. "</td></tr>"; //. $row["time"]. "</td></tr>";
+                        . $row["Due_date"]. "</td></tr>"; //. $row["time"]. "</td></tr>";
                     }
                     echo "</table>";
                 } else { echo "0 results"; }
