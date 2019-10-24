@@ -79,40 +79,51 @@
                 $tot_amt = $_POST['tot_amt'];
                 $amt_spe = $_POST['amt_spe'];
 
-                $q = "select Project_id from projects where Builder_id = '$id'";
-                $q_run = mysqli_query($con,$q);
-                if(){
-                $query = "insert into expenditure (Project_id, Total_amount, Amount_spent) values ('". $_POST['proj_id'] ."', '". $_POST['tot_amt'] ."', '". $_POST['amt_spe'] ."')";
+                $query = "select Project_id from projects where Builder_id = '$id'";
                 $query_run = mysqli_query($con,$query);
-                if($query_run)
-                {
-                    $sql = "DELIMITER $$
-                            DROP PROCEDURE IF EXISTS `pro`$$
-                            CREATE PROCEDURE `pro`(id int)
-                            BEGIN
-                            UPDATE expenditure SET Profit = (Total_amount-Amount_spent);
-                            END
-                            $$
-                            DELIMITER ;";
-                    $sql_run = mysqli_query($con,$sql);
-                    $call = mysqli_prepare($con,"CALL pro(@proj_id)");
-                    mysqli_stmt_execute($call);
+                if($query_run) {
+                    while($row = mysqli_fetch_assoc($query_run)) {          
+                        $proj = $row['Project_id'];
+                        if($proj == $proj_id) {
+                                 $query1 = "insert into expenditure (Project_id, Total_amount, Amount_spent) values ('". $_POST['proj_id'] ."', '". $_POST['tot_amt'] ."', '". $_POST['amt_spe'] ."')";
+                                 $query_run1 = mysqli_query($con,$query);
+                                if($query_run1)
+                                 {
+                    //$sql = "DELIMITER $$
+                      //      DROP PROCEDURE IF EXISTS `pro`$$
+                        //   CREATE PROCEDURE `pro`(id int)
+                         //   BEGIN
+                           // UPDATE expenditure SET Profit = (Total_amount-Amount_spent);
+                            //END
+                        //    $$
+                      //      DELIMITER ;"
+                    //$sql_run = mysqli_query($con,$sql);
+                    //$call = mysqli_prepare($con,"CALL pro(@proj_id)");
+                   // mysqli_stmt_execute($call);
 
-                    echo '<script type="text/javascript">alert("Added to expenses... ")</script>';
-                    header( "Location: expenditure.php");
-                }
-                else
-                {
-                    echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                            echo '<script type="text/javascript">alert("Added to expenses... ")</script>';
+                            header( "Location: expenditure.php");
+                        }
+                        else{
+                            echo '<script type="text/javascript">alert("Registration unsucessful")</script>';
+                        }
+                    }
+                    else{
+                        echo '<script type="text/javascript">alert("Not your project")</script>';
+                    }
                 }
             }
-        }
-        else{
-            echo "Not your project";
-        }
-			else
-			{
-			}
+                      else
+                        {
+                            echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                         }
+                        }
+                        else{
+
+                        }
+       
+      
+			
 		?>
 	</div>
     <div id="push"></div>
