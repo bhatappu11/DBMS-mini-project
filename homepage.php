@@ -98,7 +98,7 @@
                 <p class="card-text">Here's a detailed list of all your personal schedules.</p>
             </div>
             <div class="card-body">
-            <a href="#" class="btn btn-primary">View All</a>
+            <a href="personal_schedule.php" class="btn btn-primary">View All</a>
             </div>
         </div>
     </div>
@@ -110,7 +110,7 @@
                 <p class="card-text">All the financial details.</p>
             </div>
             <div class="card-body">
-            <a href="#" class="btn btn-primary" name="expe">View All</a>
+            <a href="expenditure.php" class="btn btn-primary" name="expe">View All</a>
             </div>
         </div>
     </div>
