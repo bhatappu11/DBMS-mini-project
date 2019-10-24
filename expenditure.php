@@ -69,28 +69,47 @@
 		<?php
 			if(isset($_POST['add_expense']))
 			{
-                // $username=$_SESSION['username'];
-                // $query = "select Builder_id from builder where Builder_name='$username'";
-                // $query_run=mysqli_query($con,$query);
-                // $ans = mysqli_fetch_assoc($query_run);
-                // $id = $ans['Builder_id'];
+                $username=$_SESSION['username'];
+                $query = "select Builder_id from builder where Builder_name='$username'";
+                $query_run=mysqli_query($con,$query);
+                $ans = mysqli_fetch_assoc($query_run);
+                $id = $ans['Builder_id'];
                 
                 $proj_id = $_POST['proj_id'];
                 $tot_amt = $_POST['tot_amt'];
                 $amt_spe = $_POST['amt_spe'];
 
+                $q = "select Project_id from projects where Builder_id = '$id'";
+                $q_run = mysqli_query($con,$q);
+                if(){
                 $query = "insert into expenditure (Project_id, Total_amount, Amount_spent) values ('". $_POST['proj_id'] ."', '". $_POST['tot_amt'] ."', '". $_POST['amt_spe'] ."')";
                 $query_run = mysqli_query($con,$query);
                 if($query_run)
                 {
+                    $sql = "DELIMITER $$
+                            DROP PROCEDURE IF EXISTS `pro`$$
+                            CREATE PROCEDURE `pro`(id int)
+                            BEGIN
+                            UPDATE expenditure SET Profit = (Total_amount-Amount_spent);
+                            END
+                            $$
+                            DELIMITER ;";
+                    $sql_run = mysqli_query($con,$sql);
+                    $call = mysqli_prepare($con,"CALL pro(@proj_id)");
+                    mysqli_stmt_execute($call);
+
                     echo '<script type="text/javascript">alert("Added to expenses... ")</script>';
-                    header( "Location: contractor_details.php");
+                    header( "Location: expenditure.php");
                 }
                 else
                 {
                     echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
                 }
-			}
+            }
+        }
+        else{
+            echo "Not your project";
+        }
 			else
 			{
 			}
@@ -117,7 +136,7 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                $query = "select * from expenditure where Project_id in (select project_id from projects where Builder_id='$id'";
+                $query = "select * from expenditure where Project_id in (select project_id from projects where Builder_id='$id')";
                 $query_run = mysqli_query($con,$query);
             
                 if(mysqli_num_rows($query_run)>0) {
