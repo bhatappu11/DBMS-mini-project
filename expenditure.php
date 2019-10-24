@@ -69,11 +69,11 @@
 		<?php
 			if(isset($_POST['add_expense']))
 			{
-                $username=$_SESSION['username'];
-                $query = "select Builder_id from builder where Builder_name='$username'";
-                $query_run=mysqli_query($con,$query);
-                $ans = mysqli_fetch_assoc($query_run);
-                $id = $ans['Builder_id'];
+                // $username=$_SESSION['username'];
+                // $query = "select Builder_id from builder where Builder_name='$username'";
+                // $query_run=mysqli_query($con,$query);
+                // $ans = mysqli_fetch_assoc($query_run);
+                // $id = $ans['Builder_id'];
                 
                 $proj_id = $_POST['proj_id'];
                 $tot_amt = $_POST['tot_amt'];
@@ -117,14 +117,13 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                $query = "select * from contractor where Builder_id='$id'";
+                $query = "select * from expenditure where Project_id in (select project_id from projects where Builder_id='$id'";
                 $query_run = mysqli_query($con,$query);
             
                 if(mysqli_num_rows($query_run)>0) {
                     // output data of each rows
                     while($row = $query_run->fetch_assoc()) {
-                        echo "<tr><td>" . $row["Contractor_id"]. "</td><td>" . $row["Contractor_name"] . "</td><td>"
-                        . $row["PhoneNum"]. "</td></tr>";
+                        echo "<tr><td>" . $row["Project_id"] . "</td><td>" . $row["Total_amount"] . "</td><td>" . $row["Amount_spent"] . "</td></tr>" . $row["Profit"] . "</td></tr>";
                     }
                     echo "</table>";
                 } else { echo "0 results"; }
