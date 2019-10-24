@@ -46,16 +46,18 @@
     <div class="form-inline">
         <div class="form-group">
             <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Projects <span class="caret"></span> </button>
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add to schedule <span class="caret"></span> </button>
                 <ul class="dropdown-menu" aria-labelledby="strikes">
                     <li style="width: 280px;">
             		    <form action="projects.php" method="post">
 			                <div class="class-for-form">
-                                <label><b>Project Name</b></label>
-                                <input type="text" class="input-class" placeholder="Enter project name" name="project_name" required>
-                                <label><b>Contractor ID</b></label>
-                                <input type="number" class="input-class" placeholder="Enter contractor ID" name="cont_id" required>
-                                <button name="add_project" class="btn-submit" type="submit">Add</button>
+                                <label><b>Type_of_work</b></label>
+                                <input type="text" class="input-class" placeholder="Enter type_of_work" name="work_name" required>
+                                <label><b>Date</b></label>
+                                <input type="text" class="input-class" placeholder="Enter Date in format YYYY-MM-DD" name="date" required>
+                                <label><b>Time</b></label>
+                                <input type="text" class="input-class" placeholder="Enter Time " name="time" required>
+                                <button name="add_schedule" class="btn-submit" type="submit">Add</button>
 				            </div>
 		                </form>
                     </li>
@@ -64,53 +66,62 @@
         </div>
 		
 		<?php
-			if(isset($_POST['add_project']))
+			if(isset($_POST['add_schedule']))
 			{
-                $project_name=$_POST['project_name'];
-                $contractor_id=$_POST['cont_id'];
+                $type_of_work=$_POST['work_name'];
+                $date=$_POST['date'];
+                $time=$_POST['time'];
                 $username=$_SESSION['username'];
                 $query = "select Builder_id from builder where Builder_name='$username'";
                 $query_run=mysqli_query($con,$query);
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                $query = "select Builder_id from contractor where Contractor_id='$contractor_id'";
-                $query_run=mysqli_query($con,$query);
-                if($query_run) {
-                    while($row = mysqli_fetch_assoc($query_run)) {          
-                        $builder_id = $row['Builder_id'];
-                        if($builder_id == $id) {
-                            $query = "insert into projects values('','". $_POST["project_name"] ."','$id','". $_POST["cont_id"] ."')";
-                            $query_run = mysqli_query($con,$query);
-                            if($query_run) {
-                                echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
-                                header( "Location: projects.php");
-                            }
-                            else
-                            {
-                                echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
-                            }
+                $cont_name = $_POST['cont_name'];
+				$query = "select * from contractor where Builder_id='$id' and Contractor_name='$cont_name'";
+				//echo $query;
+				$query_run = mysqli_query($con,$query);
+				//echo mysql_num_rows($query_run);
+				if($query_run)
+                {
+                    if(mysqli_num_rows($query_run)>0)
+                    {
+                        echo '<script type="text/javascript">alert("This Username Already exists.. Please try another username!")</script>';
+                    }
+                    else
+                    {
+                        $query = "insert into personal (Builder_id,Type_of_work,Date,Time) values('$id','". $_POST["work_name"] . "'," . $_POST["date"] . "'," . $_POST["time"] . "')";
+                        $query_run = mysqli_query($con,$query);
+                        if($query_run)
+                        {
+                            echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
+                            header( "Location: contractor_details.php");
                         }
-                        else {
-                            echo '<script type="text/javascript">alert(""Contractor does not exit in your list.. add contractor and try again..."")</script>';
+                        else
+                        {
+                            echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
                         }
                     }
                 }
-                else {
-                    echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                else
+                {
+                    echo '<script type="text/javascript">alert("DB error")</script>';
                 }
-            }
-            else {
-            }
+				
+			}
+			else
+			{
+			}
 		?>
 	</div>
     <div class="container" style="margin-top:30px">
         <table class="table table-striped table-dark table-bordered text-center">
         <thead>
             <tr>
-                <th>Project ID</th>
-                <th>Project Name</th>
-                <th>Contractor ID</th>
+                <th>Builder ID</th>
+                <th>Type of work</th>
+                <th>Date</th>
+                <th>Time</th>
             </tr>
         </thead>
         <tbody>
@@ -125,14 +136,14 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                $query = "select * from projects where Builder_id='$id'";
+                $query = "select * from personal_schedule where Builder_id='$id'";
                 $query_run = mysqli_query($con,$query);
             
                 if(mysqli_num_rows($query_run)>0) {
                     // output data of each rows
                     while($row = $query_run->fetch_assoc()) {
-                        echo "<tr><td>" . $row["project_id"]. "</td><td>" . $row["project_name"] . "</td><td>"
-                        . $row["Contractor_id"]. "</td></tr>";
+                        echo "<tr><td>" . $row["Builder_id"]. "</td><td>" . $row["work_name"] . "</td><td>"
+                        . $row["date"]. "</td></tr>" . $row["time"]. "</td></tr>";
                     }
                     echo "</table>";
                 } else { echo "0 results"; }
