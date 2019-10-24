@@ -47,10 +47,10 @@
     <div class="form-inline">
         <div class="form-group">
             <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Contractors <span class="caret"></span> </button>
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Expenses <span class="caret"></span> </button>
                 <ul class="dropdown-menu" aria-labelledby="strikes">
                     <li style="width: 280px;">
-            		    <form action="contractor_details.php" method="post">
+            		    <form action="expenditure.php" method="post">
 			                <div class="class-for-form">
                                 <label><b>Project ID</b></label>
                                 <input type="number" class="input-class" placeholder="Enter project ID" name="proj_id" required>
@@ -102,16 +102,14 @@
         <table class="table table-striped table-dark table-bordered text-center">
         <thead>
             <tr>
-                <th>Contratcor ID</th>
-                <th>Contractor Name</th>
-                <th>Phone Number</th>
+                <th>Project ID</th>
+                <th>Amount Received</th>
+                <th>Amount Spent</th>
+                <th>Profit</th>
             </tr>
         </thead>
         <tbody>
             <?php
-                
-                $sql = "SELECT * FROM builder";
-                $query_run = mysqli_query($con,$sql);
 
                 $uname = $_SESSION['username'];
                 $query = "select Builder_id from builder where Builder_name='$uname'";
