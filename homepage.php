@@ -98,7 +98,7 @@
                 <p class="card-text">Here's a detailed list of all your personal schedules.</p>
             </div>
             <div class="card-body">
-            <a href="personal.php" class="btn btn-primary">View All</a>
+            <a href="personal_schedule.php" class="btn btn-primary">View All</a>
             </div>
         </div>
     </div>
