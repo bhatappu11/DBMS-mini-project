@@ -52,10 +52,12 @@
                     <li style="width: 280px;">
             		    <form action="contractor_details.php" method="post">
 			                <div class="class-for-form">
-				                <label><b>Total Amount</b></label>
-                                <input type="text" class="input-class" placeholder="Enter contractor name" name="tot_amt" required>
-                                <label><b>Amount Received</b></label>
-                                <input type="number" class="input-class" placeholder="Enter contractor Phone number" name="amt_rec" required>
+                                <label><b>Project ID</b></label>
+                                <input type="number" class="input-class" placeholder="Enter project ID" name="proj_id" required>
+                                <label><b>Total Amount</b></label>
+                                <input type="text" class="input-class" placeholder="Enter amount received" name="tot_amt" required>
+                                <label><b>Amount Spent</b></label>
+                                <input type="number" class="input-class" placeholder="Enter amount spent on the project" name="amt_spe" required>
                                 <button name="add_expense" class="btn-submit" type="submit">Add</button>
 				            </div>
 		                </form>
@@ -73,37 +75,21 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
                 
-                $cont_name = $_POST['cont_name'];
-				$query = "select * from contractor where Builder_id='$id' and Contractor_name='$cont_name'";
-				//echo $query;
-				$query_run = mysqli_query($con,$query);
-				//echo mysql_num_rows($query_run);
-				if($query_run)
+                $proj_id = $_POST['proj_id'];
+                $tot_amt = $_POST['tot_amt'];
+                $amt_spe = $_POST['amt_spe'];
+
+                $query = "insert into expenditure (Project_id, Total_amount, Amount_spent) values ('". $_POST['proj_id'] ."', '". $_POST['tot_amt'] ."', '". $_POST['amt_spe'] ."')";
+                $query_run = mysqli_query($con,$query);
+                if($query_run)
                 {
-                    if(mysqli_num_rows($query_run)>0)
-                    {
-                        echo '<script type="text/javascript">alert("This Username Already exists.. Please try another username!")</script>';
-                    }
-                    else
-                    {
-                        $query = "insert into contractor (Contractor_id,Contractor_name,Builder_id,PhoneNum) values('','". $_POST["cont_name"] . "','$id','" . $_POST["phone"] . "')";
-                        $query_run = mysqli_query($con,$query);
-                        if($query_run)
-                        {
-                            echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
-                            header( "Location: contractor_details.php");
-                        }
-                        else
-                        {
-                            echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
-                        }
-                    }
+                    echo '<script type="text/javascript">alert("Added to expenses... ")</script>';
+                    header( "Location: contractor_details.php");
                 }
                 else
                 {
-                    echo '<script type="text/javascript">alert("DB error")</script>';
+                    echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
                 }
-				
 			}
 			else
 			{
