@@ -47,18 +47,16 @@
     <div class="form-inline">
         <div class="form-group">
             <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add to Schedule <span class="caret"></span> </button>
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Contractors <span class="caret"></span> </button>
                 <ul class="dropdown-menu" aria-labelledby="strikes">
                     <li style="width: 280px;">
-            		    <form action="daily_schedule.php" method="post">
+            		    <form action="contractor_details.php" method="post">
 			                <div class="class-for-form">
-				                <label><b>Project ID</b></label>
-                                <input type="number" class="input-class" placeholder="Enter project id" name="proj_id" required>
-                                <label><b>Available Employees</b></label>
-                                <input type="number" class="input-class" placeholder="Enter number of employees available" name="avail_emp" required>
-                                <label><b>Due Date</b></label>
-                                <input type="text" class="input-class" placeholder="Enter due date" name="due_date" required>
-                                <button name="add_daily_sch" class="btn-submit" type="submit">Add</button>
+				                <label><b>Total Amount</b></label>
+                                <input type="text" class="input-class" placeholder="Enter contractor name" name="tot_amt" required>
+                                <label><b>Amount Received</b></label>
+                                <input type="number" class="input-class" placeholder="Enter contractor Phone number" name="amt_rec" required>
+                                <button name="add_expense" class="btn-submit" type="submit">Add</button>
 				            </div>
 		                </form>
                     </li>
@@ -67,7 +65,7 @@
         </div>                  
 		
 		<?php
-			if(isset($_POST['add_daily_sch']))
+			if(isset($_POST['add_expense']))
 			{
                 $username=$_SESSION['username'];
                 $query = "select Builder_id from builder where Builder_name='$username'";
@@ -75,11 +73,8 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
                 
-                $proj_id = $_POST['proj_id'];
-                $avail_emp = $_POST['avail_emp'];
-                $due_date = $_POST['due_date'];
-
-				$query = "select * from daily_schedule where Builder_id='$id' and Project_id='$proj_id'";
+                $cont_name = $_POST['cont_name'];
+				$query = "select * from contractor where Builder_id='$id' and Contractor_name='$cont_name'";
 				//echo $query;
 				$query_run = mysqli_query($con,$query);
 				//echo mysql_num_rows($query_run);
@@ -87,36 +82,20 @@
                 {
                     if(mysqli_num_rows($query_run)>0)
                     {
-                        echo '<script type="text/javascript">alert("This Project Already exists.. Please try another...")</script>';
+                        echo '<script type="text/javascript">alert("This Username Already exists.. Please try another username!")</script>';
                     }
                     else
                     {
-                        $query = "select Project_id from projects where Builder_id='$id'";
-                        $query_run=mysqli_query($con,$query);
-                        if($query_run) {
-                            while($row = mysqli_fetch_assoc($query_run)) {
-                                $project_id = $row['Project_id'];
-                                if($project_id == $proj_id) {
-                                    $query = "insert into daily_schedule values('$id','". $_POST["proj_id"] . "'," . $_POST["avail_emp"] . ",'" . $_POST["due_date"] . "')";
-                                    $query_run = mysqli_query($con,$query);
-                                    if($query_run)
-                                    {
-                                        echo '<script type="text/javascript">alert("Added to schedule")</script>';
-                                        header( "Location: daily_schedule.php");
-                                    }
-                                    else
-                                    {
-                                        echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
-                                    }
-                                }
-                                else {
-                                    echo '<script type="text/javascript">alert("This Project does not belong to you...")</script>';
-                                }
-                            }
+                        $query = "insert into contractor (Contractor_id,Contractor_name,Builder_id,PhoneNum) values('','". $_POST["cont_name"] . "','$id','" . $_POST["phone"] . "')";
+                        $query_run = mysqli_query($con,$query);
+                        if($query_run)
+                        {
+                            echo '<script type="text/javascript">alert("Contractor Registered.. Welcome")</script>';
+                            header( "Location: contractor_details.php");
                         }
                         else
                         {
-                            echo '<script type="text/javascript">alert("DB error")</script>';
+                            echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
                         }
                     }
                 }
@@ -124,10 +103,11 @@
                 {
                     echo '<script type="text/javascript">alert("DB error")</script>';
                 }
+				
 			}
-            else
-            {
-            }
+			else
+			{
+			}
 		?>
 	</div>
     <div id="push"></div>
@@ -136,13 +116,16 @@
         <table class="table table-striped table-dark table-bordered text-center">
         <thead>
             <tr>
-                <th>Project ID</th>
-                <th>Available Employees</th>
-                <th>Due Date</th>
+                <th>Contratcor ID</th>
+                <th>Contractor Name</th>
+                <th>Phone Number</th>
             </tr>
         </thead>
         <tbody>
             <?php
+                
+                $sql = "SELECT * FROM builder";
+                $query_run = mysqli_query($con,$sql);
 
                 $uname = $_SESSION['username'];
                 $query = "select Builder_id from builder where Builder_name='$uname'";
@@ -150,14 +133,14 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                $query = "select * from daily_schedule where Builder_id='$id' order by Due_date";
+                $query = "select * from contractor where Builder_id='$id'";
                 $query_run = mysqli_query($con,$query);
-
+            
                 if(mysqli_num_rows($query_run)>0) {
                     // output data of each rows
                     while($row = $query_run->fetch_assoc()) {
-                        echo "<tr><td>" . $row["Project_id"]. "</td><td>" . $row["Available_emp"] . "</td><td>"
-                        . $row["Due_date"]. "</td></tr>";
+                        echo "<tr><td>" . $row["Contractor_id"]. "</td><td>" . $row["Contractor_name"] . "</td><td>"
+                        . $row["PhoneNum"]. "</td></tr>";
                     }
                     echo "</table>";
                 } else { echo "0 results"; }
