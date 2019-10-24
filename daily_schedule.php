@@ -143,9 +143,6 @@
         </thead>
         <tbody>
             <?php
-                
-                // $sql = "SELECT * FROM builder";
-                // $query_run = mysqli_query($con,$sql);
 
                 $uname = $_SESSION['username'];
                 $query = "select Builder_id from builder where Builder_name='$uname'";
@@ -159,8 +156,8 @@
                 if(mysqli_num_rows($query_run)>0) {
                     // output data of each rows
                     while($row = $query_run->fetch_assoc()) {
-                        echo "<tr><td>" . $row["Project_id"]. "</td><td>" . $row["Due_date"] . "</td><td>"
-                        . $row["Available_emp"]. "</td></tr>";
+                        echo "<tr><td>" . $row["Project_id"]. "</td><td>" . $row["Available_emp"] . "</td><td>"
+                        . $row["Due_date"]. "</td></tr>";
                     }
                     echo "</table>";
                 } else { echo "0 results"; }
@@ -179,13 +176,3 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
-
-DELIMITER $$
-CREATE TRIGGER trig_name BEFORE INSERT ON daily_schedule
-FOR EACH ROW
-    BEGIN
-        IF NEW.Available_emp < 0  THEN  
-            insert into daily_schedule values('$id','". $_POST["proj_id"] . "',"0",'" . $_POST["due_date"] . "');
-        END IF;
-	END; $$
-DELIMITER ;

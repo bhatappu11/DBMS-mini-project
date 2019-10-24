@@ -159,24 +159,3 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
-
-
-DELIMITER $$
-CREATE PROCEDURE SUB (REC INT(9), SPENT INT(9)) RETURNS INT(8)
-BEGIN
-    DECLARE PROFIT INT(8);
-    SET PROFIT = REC - SPENT;
-    RETURN PROFIT;
-END $$
-DELIMITER ;
-
-profit = CALL SUB($tot_amt, $rec_amt)
-
-if(profit < 0) 
-
-
-
-
-CREATE TRIGGER trigger_Name
-Before insert ON 
-For  EACH  ROW
