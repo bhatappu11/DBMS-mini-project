@@ -62,7 +62,7 @@
                 </ul>
             </div>
         </div>
-		
+
 		<?php
 			if(isset($_POST['add_project']))
 			{
@@ -115,10 +115,6 @@
         </thead>
         <tbody>
             <?php
-                
-                $sql = "SELECT * FROM builder";
-                $query_run = mysqli_query($con,$sql);
-
                 $uname = $_SESSION['username'];
                 $query = "select Builder_id from builder where Builder_name='$uname'";
                 $query_run=mysqli_query($con,$query);

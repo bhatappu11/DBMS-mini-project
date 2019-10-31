@@ -166,7 +166,64 @@
         </table>
     </div>
 	
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Retrive according to date <span class="caret"></span> </button>
+                <ul class="dropdown-menu" aria-labelledby="strikes">
+                    <li style="width: 280px;">
+            		    <form action="daily_schedule.php" method="post">
+			                <div class="class-for-form">
+                                <label><b>Date</b></label>
+                                <input type="text" class="input-class" placeholder="Enter date" name="date_given" required>
+                                <button name="retrieve" class="btn-submit" type="submit">Retrieve</button>
+				            </div>
+		                </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
+    </div>
+    <div class="container" style="margin-top:30px">
+        <table class="table table-striped table-dark table-bordered text-center">
+        <thead>
+            <tr>
+                <th>Project ID</th>
+                <th>Available Employees</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                if(isset($_POST['retrieve']))
+                {
+                    $uname = $_SESSION['username'];
+                    $query = "select Builder_id from builder where Builder_name='$uname'";
+                    $query_run=mysqli_query($con,$query);
+                    $ans = mysqli_fetch_assoc($query_run);
+                    $id = $ans['Builder_id'];
+
+                    $date_given = $_POST['date_given'];
+
+                    $query = "select * from daily_schedule where Builder_id='$id' and Due_date='$date_given'";
+                    $query_run = mysqli_query($con,$query);
+                
+                    if(mysqli_num_rows($query_run)>0) {
+                        // output data of each rows
+                        while($row = $query_run->fetch_assoc()) {
+                            echo "<tr><td>" . $row["Project_id"]. "</td><td>" . $row["Available_emp"] . "</td><td>"
+                            . $row["Due_date"]. "</td></tr>";
+                        }
+                        echo "</table>";
+                    } else {
+                        echo '<script type="text/javascript">alert("Nothing due on this day")</script>';
+                    }
+                }
+            ?>
+        </tbody>
+        </table>
+    </div>
 
 
     <!-- Optional JavaScript -->
