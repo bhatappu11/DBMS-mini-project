@@ -136,6 +136,63 @@
         </tbody>
         </table>
     </div>
+    <br><br>
+
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Delete Projects <span class="caret"></span> </button>
+                <ul class="dropdown-menu" aria-labelledby="strikes">
+                    <li style="width: 280px;">
+            		    <form action="projects.php" method="post">
+			                <div class="class-for-form">
+                                <label><b>Project ID</b></label>
+                                <input type="number" class="input-class" placeholder="Enter project id" name="project_id" required>
+                                <button name="delete_project" class="btn-submit" type="submit">Delete</button>
+				            </div>
+		                </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+		<?php
+			if(isset($_POST['delete_project']))
+			{
+                $project_id=$_POST['project_id'];
+                $username=$_SESSION['username'];
+                $query = "select Builder_id from builder where Builder_name='$username'";
+                $query_run=mysqli_query($con,$query);
+                $ans = mysqli_fetch_assoc($query_run);
+                $id = $ans['Builder_id'];
+
+                $query = "select Builder_id from projects where project_id='$project_id'";
+                $query_run=mysqli_query($con,$query);
+                if($query_run) {
+                    if(mysqli_num_rows($query_run) == 1) {          
+                        $query = "delete from projects where project_id = '" . $_POST["project_id"] . "'";
+                        $query_run = mysqli_query($con,$query);
+                        if($query_run) {
+                            echo '<script type="text/javascript">alert("Contractor Deleted")</script>';
+                            //header( "Location: projects.php");
+                        }
+                        else
+                        {
+                            echo '<p class="bg-danger msg-block">Deletion Unsuccessful due to server error. Please try later</p>';
+                        }
+                    }
+                    else {
+                        echo '<script type="text/javascript">alert(""Project does not exist"")</script>';
+                    }
+                }
+                else {
+                    echo '<p class="bg-danger msg-block">Deletion Unsuccessful due to server error. Please try later</p>';
+                }
+            }
+            else {
+            }
+		?>
+	</div>
 
     <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

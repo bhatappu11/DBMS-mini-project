@@ -85,12 +85,12 @@
 				//echo mysql_num_rows($query_run);
 				if($query_run)
                 {
-                    if(mysqli_num_rows($query_run)>0)
-                    {
-                        echo '<script type="text/javascript">alert("This Project Already exists.. Please try another...")</script>';
-                    }
-                    else
-                    {
+                    // if(mysqli_num_rows($query_run)>0)
+                    // {
+                    //     echo '<script type="text/javascript">alert("This Project Already exists.. Please try another...")</script>';
+                    // }
+                    // else
+                    // {
                         $query = "select Project_id from projects where Builder_id='$id'";
                         $query_run=mysqli_query($con,$query);
                         if($query_run) {
@@ -118,7 +118,7 @@
                         {
                             echo '<script type="text/javascript">alert("DB error")</script>';
                         }
-                    }
+                    //}
                 }
                 else
                 {
@@ -224,7 +224,6 @@
         </tbody>
         </table>
     </div>
-
 
     <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

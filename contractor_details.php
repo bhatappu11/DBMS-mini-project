@@ -103,7 +103,6 @@
                 {
                     echo '<script type="text/javascript">alert("DB error")</script>';
                 }
-				
 			}
 			else
 			{
@@ -111,7 +110,7 @@
 		?>
 	</div>
     <div id="push"></div>
-    
+
     <div class="container" style="margin-top:30px">
         <table class="table table-striped table-dark table-bordered text-center">
         <thead>
@@ -139,14 +138,77 @@
                         . $row["PhoneNum"]. "</td></tr>";
                     }
                     echo "</table>";
-                } else { echo "0 results"; }
-            ?>
+                } else { echo "0 results"; }  
+            ?>      
         </tbody>
         </table>
     </div>
-	
+    <br><br>
 
-
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Delete Contractors <span class="caret"></span> </button>
+                <ul class="dropdown-menu" aria-labelledby="strikes">
+                    <li style="width: 280px;">
+            		    <form action="contractor_details.php" method="post">
+			                <div class="class-for-form">
+				                <label><b>Contractor ID</b></label>
+                                <input type="number" class="input-class" placeholder="Enter contractor id" name="cont_id" required>
+                                <button name="delete_contractor" class="btn-submit" type="submit">Delete</button>
+				            </div>
+		                </form>
+                    </li>
+                </ul>
+            </div>
+        </div>                  
+		
+		<?php
+			if(isset($_POST['delete_contractor']))
+			{
+                $username=$_SESSION['username'];
+                $query = "select Builder_id from builder where Builder_name='$username'";
+                $query_run=mysqli_query($con,$query);
+                $ans = mysqli_fetch_assoc($query_run);
+                $id = $ans['Builder_id'];
+                
+                $cont_id = $_POST['cont_id'];
+				$query = "select * from contractor where Builder_id='$id' and Contractor_id='$cont_id'";
+				//echo $query;
+				$query_run = mysqli_query($con,$query);
+				//echo mysql_num_rows($query_run);
+				if($query_run)
+                {
+                    if(mysqli_num_rows($query_run) != 1)
+                    {
+                        echo '<script type="text/javascript">alert("This Username does not exist.. Please try another id!")</script>';
+                    }
+                    else
+                    {
+                        $query = "delete from contractor where Contractor_id = '" . $_POST["cont_id"] . "'";
+                        $query_run = mysqli_query($con,$query);
+                        if($query_run)
+                        {
+                            echo '<script type="text/javascript">alert("Contractor Deleted")</script>';
+                            //header( "Location: contractor_details.php");
+                        }
+                        else
+                        {
+                            echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                        }
+                    }
+                }
+                else
+                {
+                    echo '<script type="text/javascript">alert("DB error")</script>';
+                }				
+			}
+			else
+			{
+			}
+		?>
+	</div>
+    <div id="push"></div>
 
     <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

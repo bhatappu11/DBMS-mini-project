@@ -23,5 +23,13 @@
         </ul>
     </div>
 </nav>
+<br>
+<br>
+<br>
+<h2 style="color:black"><center>Contact Us</center><h2><br>
+<p><center><h3 style="color:maroon">By Phone<br></h3>
+<h5 style="color:yellow">+91 9045982345</h5><br>
+<br><h3 style="color:maroon">By Email</h3>
+<h5 style="color:yellow">letusknow@letsbuild.com</h5></center></p>
 </body>
 </html>

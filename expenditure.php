@@ -47,7 +47,7 @@
     <div class="form-inline">
         <div class="form-group">
             <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Contractors <span class="caret"></span> </button>
+            <button class="btn btn-default dropdown-toggle" type="button" id="strikes-range" data-toggle="dropdown" aria-haspopup="true"> Add Expenses <span class="caret"></span> </button>
                 <ul class="dropdown-menu" aria-labelledby="strikes">
                     <li style="width: 280px;">
             		    <form action="expenditure.php" method="post">
@@ -82,7 +82,7 @@
                 $query = "select project_id from projects where Builder_id='$id'";
                 $query_run=mysqli_query($con,$query);
                 if($query_run) {
-                    while($row = mysqli_fetch_assoc($query_run)) {          
+                    while($row = mysqli_fetch_assoc($query_run)) {
                         $project_id = $row['project_id'];
                         if($project_id == $proj_id) {
                             $query = "insert into expenditure values('$project_id','". $_POST['total'] ."','". $_POST['spent'] ."', ('". $_POST['total'] ."' - '". $_POST['spent'] ."'))";
@@ -93,7 +93,7 @@
                             }
                             else
                             {
-                                echo '<p class="bg-danger msg-block">Registration Unsuccessful due to server error. Please try later</p>';
+                                echo '<script type="text/javascript">alert("Oops! That will be a loss!")</script>';
                             }
                         }
                         else {

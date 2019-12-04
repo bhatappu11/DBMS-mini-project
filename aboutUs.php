@@ -23,5 +23,16 @@
         </ul>
     </div>
 </nav>
+<br>
+<br>
+<br>
+<h2><center>With Let's Build, your imagination is at your fingertips.</center></h2>
+<br>
+<p><h4><i><center>Our mission is to become the best Builder's Management System <br>
+to give builders the freedom to make their own schedule,<br>
+to keep track of all their activities.<br>
+<br>Hustle isn't just a saying here.<br> 
+We work hard fast and at a level of excellence our competition only dreams of.<br>
+We are glad you are here.</center></i></h4></p>
 </body>
 </html>
