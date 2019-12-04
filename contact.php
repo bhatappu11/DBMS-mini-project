@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light navbar-expand-lg fixed-top">
-    <a href="homepage.php" class="navbar-brand">Lets Build</a>
+    <a href="#" class="navbar-brand">Lets Build</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
