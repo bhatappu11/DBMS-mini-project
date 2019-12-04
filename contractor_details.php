@@ -115,7 +115,7 @@
         <table class="table table-striped table-dark table-bordered text-center">
         <thead>
             <tr>
-                <th>Contratcor ID</th>
+                <th>Contractor ID</th>
                 <th>Contractor Name</th>
                 <th>Phone Number</th>
             </tr>

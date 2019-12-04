@@ -130,7 +130,8 @@
                 $ans = mysqli_fetch_assoc($query_run);
                 $id = $ans['Builder_id'];
 
-                $query = "select * from expenditure where Project_id in (select project_id from projects where Builder_id='$id')";
+                // $query = "select * from expenditure where Project_id in (select project_id from projects where Builder_id='$id')";
+                $query = "call disp('$id')";
                 $query_run = mysqli_query($con,$query);
             
                 if(mysqli_num_rows($query_run)>0) {
